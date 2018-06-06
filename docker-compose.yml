@@ -3,9 +3,9 @@ redis:
     container_name: redis
     ports:
         - 6379:6379
-#    volumes:
-#        - ./redis/redis.conf: /data/redis.conf
-#    command: redis-server /data/redis.conf
+    volumes:
+        - ./redis/redis.conf:/data/redis.conf
+    command: redis-server /data/redis.conf
     restart: always
 
 mysql:
@@ -15,18 +15,6 @@ mysql:
         - 3306:3306
     environment:
         - MYSQL_ROOT_PASSWORD=root
-    restart: always
-    
-phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    links:
-        - mysql:db
-    ports:
-        - 8000:80
-    environment:
-        - PMA_HOST=db
-        - PMA_PORT=3306
     restart: always
 
 mongo:
@@ -39,16 +27,14 @@ mongo:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
 
-mongo-express:
-    image: mongo-express
-    container_name: mongo_express
-    restart: always
-    links: 
-      - mongo:db
+phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+        - mysql:db
     ports:
-      - 8001:8081
+        - 8080:80
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: root
-      ME_CONFIG_BASICAUTH_USERNAME: root
-      ME_CONFIG_BASICAUTH_PASSWORD: root
+        - PMA_HOST=db
+        - PMA_PORT=3306
+    restart: always
