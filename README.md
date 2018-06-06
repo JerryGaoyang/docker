@@ -3,6 +3,16 @@
 > 修改 docker-compose.yml 配置文件中的密码
 
 
+### 第二步：Redis 修改密码
+
+> redis/redis.conf 搜索 requirepass root , 将 root 更改为自己的密码
+
+
+### 第三步：
+
+> ./run.sh
+
+
 ### MySQL 添加用户并开启远程链接
 
 
@@ -28,8 +38,3 @@ use dbname
 
 db.createUser({'user': 'user', 'pwd': 'pwd', roles: [{'role': 'dbOwner', 'db': 'dbname'}]})
 ```
-
-
-### Redis 开启密码验证和修改密码
-
-> redis/redis.conf 搜索 requirepass root , 将 root 更改为自己的密码
